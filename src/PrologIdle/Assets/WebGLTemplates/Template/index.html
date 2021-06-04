@@ -75,5 +75,21 @@
       };
       document.body.appendChild(script);
     </script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-analytics.js"></script>
+    <script>
+      var firebaseConfig = {
+        apiKey: "AIzaSyDXaXfuFeR9gyvTDB9W-HZfQ0fE2vh8YZ8",
+        authDomain: "prolog-idle.firebaseapp.com",
+        projectId: "prolog-idle",
+        storageBucket: "prolog-idle.appspot.com",
+        messagingSenderId: "203669343909",
+        appId: "1:203669343909:web:bc335fcd1187161fbd074c",
+        measurementId: "G-L58DY2L51K"
+      };
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+    </script>
   </body>
 </html>
