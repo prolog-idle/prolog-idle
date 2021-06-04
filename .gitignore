@@ -1,0 +1,8 @@
+[Ee]xport
+[Oo]utput
+
+build-slave
+
+.tmp
+
+.DS_Store
