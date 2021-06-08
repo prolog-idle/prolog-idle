@@ -12,6 +12,6 @@ public class GameSimulationHost : MonoBehaviour
 
     private void Update()
     {
-        _gameSimulation.Update(Time.deltaTime);
+        _gameSimulation.Update(DateTime.UtcNow);
     }
 }

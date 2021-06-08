@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using TMPro;
 using UnityEngine;
 
@@ -8,12 +7,20 @@ public class ResourceView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _label;
     [SerializeField] private TextMeshProUGUI _value;
 
-    public void SetLabel(string label) => _label.text = label;
-    
-    public Func<double> Getter { get; set; }
-    
+    private Resource _resource;
+
+    public Resource Resource
+    {
+        get => _resource;
+        set
+        {
+            _resource = value;
+            _label.text = ResourceIndex.GetLabel(value.Id) + ":";
+        }
+    }
+
     private void Update()
     {
-        _value.text = Getter().ToString("F2", CultureInfo.InvariantCulture);
+        _value.text = Resource.Value.ToString("F2", CultureInfo.InvariantCulture);
     }
 }

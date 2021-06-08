@@ -1,11 +1,10 @@
-﻿public class GameState
+﻿using System;
+
+public class GameState
 {
     public static GameState Instance { get; } = new GameState();
 
+    public DateTime LastUpdate;
     public int People;
-    public float Fruits;
-    public float Stones;
-    public float Sticks;
-    public float KnappedStones;
-    public float Spears;
+    public ResourceDatabase Resources = new ResourceDatabase();
 }

@@ -1,24 +1,33 @@
-﻿public class GameSimulation
+﻿using System;
+using static ResourceIndex;
+
+public class GameSimulation
 {
     private readonly GameState _state = GameState.Instance;
 
     public void Start()
     {
-        _state.Fruits = 10;
-        _state.People = 6;
+        _state.People = 10;
+        _state.Resources[Fruit].Value = 6;
+        _state.LastUpdate = DateTime.UtcNow;
     }
 
-    public void Update(float delta)
+    public void Update(DateTime dateTime)
     {
+        var delta = (float) (dateTime - _state.LastUpdate).TotalSeconds;
+        var resources = _state.Resources;
+
         var gathererCount = _state.People;
         var gatherFruitsPerSecond = 1.01f;
-        _state.Fruits += gathererCount * gatherFruitsPerSecond * delta;
+        resources[Fruit].Value += gathererCount * gatherFruitsPerSecond * delta;
         var gatherStickPerSecond = 0.02f;
-        _state.Sticks += gathererCount * gatherStickPerSecond * delta;
+        resources[Stick].Value += gathererCount * gatherStickPerSecond * delta;
         var gatherStonePerSecond = 0.015f;
-        _state.Stones += gathererCount * gatherStonePerSecond * delta;
+        resources[Stone].Value += gathererCount * gatherStonePerSecond * delta;
 
         var consumeFruitsPerSecond = 1f;
-        _state.Fruits -= _state.People * consumeFruitsPerSecond * delta;
+        resources[Fruit].Value -= _state.People * consumeFruitsPerSecond * delta;
+
+        _state.LastUpdate = dateTime;
     }
 }

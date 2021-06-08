@@ -1,64 +1,46 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
+using static ResourceIndex;
 
 public class ProductionView : MonoBehaviour
 {
-    [SerializeField] private RectTransform _resourceList;
-    [SerializeField] private ResourceView _resourceTemplate;
-
     [SerializeField] private RectTransform _actionList;
-    [SerializeField] private ActionButton _actionTemplate;
+    [SerializeField] private ProductionActionButton _actionTemplate;
+    [SerializeField] private ResourceListView _resourceList;
+    
 
     private void Start()
     {
-        _resourceTemplate.gameObject.SetActive(false);
-        _actionTemplate.gameObject.SetActive(false);
+        Ensure(Fruit, Stick, Stone, KnappedStone, Spear);
 
         var state = GameState.Instance;
-        AddResource("People", () => state.People);
-        AddResource("Fruits", () => state.Fruits);
-        AddResource("Stones", () => state.Stones);
-        AddResource("Sticks", () => state.Sticks);
-        AddResource("Knapped Stones", () => state.KnappedStones);
-        AddResource("Spears", () => state.Spears);
-        
-        AddAction("Knap stone", () =>
+        foreach (var resource in state.Resources.Resources)
         {
-            if (state.Stones < 1)
-            {
-                return;
-            }
-
-            state.Stones--;
-            state.KnappedStones++;
-        });
+            _resourceList.Add(resource);
+        }
         
-        AddAction("Sharpen stick", () =>
-        {
-            if (state.KnappedStones <= 0 || state.Sticks < 1)
-            {
-                return;
-            }
-
-            state.KnappedStones -= 0.5f;
-            state.Sticks--;
-            state.Spears++;
-        });
+        AddAction(
+            "Knap Stone",
+            (KnappedStone, 1),
+            (Stone, 1)
+        );
+        AddAction(
+            "Sharpen Stick",
+            (Spear, 1),
+            (KnappedStone, 0.5), (Stick, 1)
+        );
     }
 
-    private void AddResource(string name, Func<double> getter)
+    private void Ensure(params ResourceId[] ids)
     {
-        var view = Instantiate(_resourceTemplate, _resourceList);
-        view.gameObject.SetActive(true);
-        view.SetLabel(name + ":");
-        view.Getter = getter;
+        foreach (var id in ids)
+        {
+            GameState.Instance.Resources.Ensure(id);
+        }
     }
 
-    private void AddAction(string name, Action action)
+    private void AddAction(string name, Resource product, params Resource[] ingredients)
     {
         var view = Instantiate(_actionTemplate, _actionList);
-        view.gameObject.SetActive(true);
-        view.SetLabel(name);
-        view.OnClick(action);
+        view.Action = new ProductionAction(name, product, ingredients);
     }
 }
