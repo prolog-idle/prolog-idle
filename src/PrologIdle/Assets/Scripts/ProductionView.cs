@@ -30,7 +30,7 @@ public class ProductionView : MonoBehaviour
         );
     }
 
-    private void Ensure(params ResourceId[] ids)
+    private void Ensure(params EntityId[] ids)
     {
         foreach (var id in ids)
         {

@@ -1,18 +1,18 @@
 public static class ResourceIndex
 {
-    public static ResourceId Fruit { get; } = new ResourceId("fruit");
-    public static ResourceId Stone { get; } = new ResourceId("stone");
-    public static ResourceId Stick { get; } = new ResourceId("stick");
-    public static ResourceId KnappedStone { get; } = new ResourceId("knapped_stone");
-    public static ResourceId Spear { get; } = new ResourceId("spear");
+    public static EntityId Fruit { get; } = new EntityId("fruit");
+    public static EntityId Stone { get; } = new EntityId("stone");
+    public static EntityId Stick { get; } = new EntityId("stick");
+    public static EntityId KnappedStone { get; } = new EntityId("knapped_stone");
+    public static EntityId Spear { get; } = new EntityId("spear");
 
-    public static string GetLabel(ResourceId resourceId)
+    public static string GetLabel(EntityId entityId)
     {
-        if (resourceId == Fruit) return "Fruits";
-        if (resourceId == Stone) return "Stones";
-        if (resourceId == Stick) return "Sticks";
-        if (resourceId == KnappedStone) return "Knapped Stones";
-        if (resourceId == Spear) return "Spears";
+        if (entityId == Fruit) return "Fruits";
+        if (entityId == Stone) return "Stones";
+        if (entityId == Stick) return "Sticks";
+        if (entityId == KnappedStone) return "Knapped Stones";
+        if (entityId == Spear) return "Spears";
         return "???";
     }
 }

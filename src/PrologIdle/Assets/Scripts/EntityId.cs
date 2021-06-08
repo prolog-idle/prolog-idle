@@ -1,16 +1,16 @@
 using System;
 using JetBrains.Annotations;
 
-public class ResourceId : IEquatable<ResourceId>
+public class EntityId : IEquatable<EntityId>
 {
-    public ResourceId([NotNull] string id)
+    public EntityId([NotNull] string id)
     {
         Id = id ?? throw new ArgumentNullException(nameof(id));
     }
     
     [NotNull] public string Id { get; }
 
-    public bool Equals(ResourceId other)
+    public bool Equals(EntityId other)
     {
         if (ReferenceEquals(null, other)) return false;
         if (ReferenceEquals(this, other)) return true;
@@ -21,8 +21,8 @@ public class ResourceId : IEquatable<ResourceId>
     {
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;
-        if (!(obj is ResourceId otherResourceId)) return false;
-        return Id == otherResourceId.Id;
+        if (!(obj is EntityId otherId)) return false;
+        return Id == otherId.Id;
     }
 
     public override int GetHashCode()
@@ -30,12 +30,12 @@ public class ResourceId : IEquatable<ResourceId>
         return Id.GetHashCode();
     }
 
-    public static bool operator ==([CanBeNull] ResourceId left, [CanBeNull] ResourceId right)
+    public static bool operator ==([CanBeNull] EntityId left, [CanBeNull] EntityId right)
     {
         return Equals(left, right);
     }
 
-    public static bool operator !=([CanBeNull] ResourceId left, [CanBeNull] ResourceId right)
+    public static bool operator !=([CanBeNull] EntityId left, [CanBeNull] EntityId right)
     {
         return !Equals(left, right);
     }

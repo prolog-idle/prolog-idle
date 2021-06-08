@@ -1,4 +1,3 @@
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,24 +26,15 @@ public class ProductionActionButton : MonoBehaviour
 
     private void OnClick()
     {
-        if (!HasEnoughResources())
-        {
-            return;
-        }
-
         var resources = GameState.Instance.Resources;
-        foreach (var ingredient in Action.Ingredients)
+        if (resources.Purchase(Action.Ingredients))
         {
-            var resource = resources[ingredient.Id];
-            resource.Value -= ingredient.Value;
+            resources.Add(Action.Product);
         }
-
-        resources[Action.Product.Id].Value += Action.Product.Value;
     }
 
-    private bool HasEnoughResources()
+    private void Update()
     {
-        var resources = GameState.Instance.Resources;
-        return Action.Ingredients.All(ingredient => ingredient.Value <= resources[ingredient.Id].Value);
+        _button.interactable = GameState.Instance.Resources.IsAffordable(Action.Ingredients);
     }
 }
