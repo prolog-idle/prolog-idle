@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 public class GameState
 {
@@ -7,4 +8,5 @@ public class GameState
     public DateTime LastUpdate;
     public int People;
     public ResourceDatabase Resources = new ResourceDatabase();
+    public List<WorkplaceModifier> WorkplaceModifiers = new List<WorkplaceModifier>();
 }

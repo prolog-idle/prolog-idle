@@ -24,12 +24,34 @@ public class Workplace
 
     public void Tick(int people, float delta)
     {
+        var modifiers = GameState.Instance.WorkplaceModifiers
+            .Where(m => m.WorkplaceId == Id)
+            .ToList();
+        TickConsumption(ConsumptionPerSecond, people, delta);
+        foreach (var modifier in modifiers)
+        {
+            TickConsumption(modifier.ConsumptionPerSecond, people, delta);
+        }
+        TickProduction(ProductionPerSecond, people, delta);
+        foreach (var modifier in modifiers)
+        {
+            TickProduction(modifier.ProductionPerSecond, people, delta);
+        }
+    }
+
+    private static void TickConsumption(List<Resource> consumptionPerSecond, int people, float delta)
+    {
         var resources = GameState.Instance.Resources;
-        foreach (var resource in ConsumptionPerSecond)
+        foreach (var resource in consumptionPerSecond)
         {
             resources.Remove(resource, people * delta);
         }
-        foreach (var resource in ProductionPerSecond)
+    }
+
+    private static void TickProduction(List<Resource> productionPerSecond, int people, float delta)
+    {
+        var resources = GameState.Instance.Resources;
+        foreach (var resource in productionPerSecond)
         {
             resources.Add(resource, people * delta);
         }

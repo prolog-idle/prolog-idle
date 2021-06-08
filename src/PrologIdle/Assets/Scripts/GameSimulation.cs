@@ -21,7 +21,7 @@ public class GameSimulation
             }
         );
         _workplaces.Add(gatherer);
-        
+
         _state.People = 10;
         _state.LastUpdate = DateTime.UtcNow;
     }
@@ -42,14 +42,6 @@ public class GameSimulation
             freePeople -= workers;
             workplace.Tick(workers, delta);
         }
-
-        //var gathererCount = _state.People;
-        //var gatherFruitsPerSecond = 1.01f;
-        //resources[Fruit].Value += gathererCount * gatherFruitsPerSecond * delta;
-        //var gatherStickPerSecond = 0.02f;
-        //resources[Stick].Value += gathererCount * gatherStickPerSecond * delta;
-        //var gatherStonePerSecond = 0.015f;
-        //resources[Stone].Value += gathererCount * gatherStonePerSecond * delta;
 
         var consumeFruitsPerSecond = (Fruit, 1);
         resources.Remove(consumeFruitsPerSecond, _state.People * delta);
