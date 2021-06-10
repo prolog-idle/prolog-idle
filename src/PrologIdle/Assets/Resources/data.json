@@ -1,0 +1,85 @@
+﻿{
+  "Resources": [
+    {
+      "Id": "adult",
+      "Name": "Adult",
+      "Traits": [
+        "worker"
+      ]
+    },
+    {
+      "Id": "fruit",
+      "Name": "Fruit",
+      "Gatherable": 1.01
+    },
+    {
+      "Id": "stone",
+      "Name": "Stone",
+      "Gatherable": 0.01
+    },
+    {
+      "Id": "stick",
+      "Name": "Stick",
+      "Gatherable": 0.015
+    },
+    {
+      "Id": "knapped_stone",
+      "Name": "Knapped Stone"
+    },
+    {
+      "Id": "spear",
+      "Name": "Spear"
+    }
+  ],
+  "ProductionActions": [
+    {
+      "Id": "knap_stone",
+      "Name": "Knap stone",
+      "Consume": [
+        {
+          "Id": "stone",
+          "Amount": 1.0
+        }
+      ],
+      "Produce": [
+        {
+          "Id": "knapped_stone",
+          "Amount": 1.0
+        }
+      ]
+    },
+    {
+      "Id": "sharpen_stick",
+      "Name": "Sharpen Stick",
+      "Consume": [
+        {
+          "Id": "stick",
+          "Amount": 1.0
+        },
+        {
+          "Id": "knapped_stone",
+          "Amount": 0.5
+        },
+      ],
+      "Produce": [
+        {
+          "Id": "spear",
+          "Amount": 1.0
+        }
+      ]
+    }
+  ],
+  "Units": [
+    {
+      "Id": "gatherer",
+      "Name": "Gatherer",
+      "RequiredTrait": "worker",
+      "Effects": [
+        {
+          "Type": "gather",
+          "Value": 1.0
+        }
+      ]
+    }
+  ]
+}

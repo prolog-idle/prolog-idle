@@ -7,6 +7,6 @@ public class GameState
 
     public DateTime LastUpdate;
     public int People;
-    public ResourceDatabase Resources = new ResourceDatabase();
+    public ResourceStockpile Resources = new ResourceStockpile();
     public List<WorkplaceModifier> WorkplaceModifiers = new List<WorkplaceModifier>();
 }

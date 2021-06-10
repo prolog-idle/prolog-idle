@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using static ResourceIndex;
 
 public class ProductionView : MonoBehaviour
 {
@@ -10,37 +9,31 @@ public class ProductionView : MonoBehaviour
 
     private void Start()
     {
-        Ensure(Fruit, Stick, Stone, KnappedStone, Spear);
+        foreach (var resource in GameDatabase.Instance.Resources)
+        {
+            Ensure(resource);
+        }
 
         var state = GameState.Instance;
-        foreach (var resource in state.Resources.Resources)
+        foreach (var resource in state.Resources.Resources.Values)
         {
             _resourceList.Add(resource);
         }
-        
-        AddAction(
-            "Knap Stone",
-            (KnappedStone, 1),
-            (Stone, 1)
-        );
-        AddAction(
-            "Sharpen Stick",
-            (Spear, 1),
-            (KnappedStone, 0.5), (Stick, 1)
-        );
-    }
 
-    private void Ensure(params EntityId[] ids)
-    {
-        foreach (var id in ids)
+        foreach (var action in GameDatabase.Instance.ProductionActions)
         {
-            GameState.Instance.Resources.Ensure(id);
+            AddAction(action);
         }
     }
 
-    private void AddAction(string name, Resource product, params Resource[] ingredients)
+    private void Ensure(Resource resource)
+    {
+        GameState.Instance.Resources.Ensure(resource.Id);
+    }
+
+    private void AddAction(ProductionAction action)
     {
         var view = Instantiate(_actionTemplate, _actionList);
-        view.Action = new ProductionAction(name, product, ingredients);
+        view.Action = action;
     }
 }

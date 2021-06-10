@@ -7,20 +7,20 @@ public class ResourceView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _label;
     [SerializeField] private TextMeshProUGUI _value;
 
-    private Resource _resource;
+    private ResourceAmount _resourceAmount;
 
-    public Resource Resource
+    public ResourceAmount ResourceAmount
     {
-        get => _resource;
+        get => _resourceAmount;
         set
         {
-            _resource = value;
-            _label.text = ResourceIndex.GetLabel(value.Id) + ":";
+            _resourceAmount = value;
+            _label.text = _resourceAmount.Resource.Name + ":";
         }
     }
 
     private void Update()
     {
-        _value.text = Resource.Value.ToString("F2", CultureInfo.InvariantCulture);
+        _value.text = ResourceAmount.Amount.ToString("F2", CultureInfo.InvariantCulture);
     }
 }

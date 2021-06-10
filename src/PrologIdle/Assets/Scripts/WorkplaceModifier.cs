@@ -4,8 +4,8 @@ public class WorkplaceModifier
 {
     public WorkplaceModifier(
         EntityId workplaceId,
-        List<Resource> consumptionPerSecond,
-        List<Resource> productionPerSecond)
+        List<ResourceAmount> consumptionPerSecond,
+        List<ResourceAmount> productionPerSecond)
     {
         WorkplaceId = workplaceId;
         ConsumptionPerSecond = consumptionPerSecond;
@@ -14,7 +14,7 @@ public class WorkplaceModifier
 
     public EntityId WorkplaceId { get; set; }
 
-    public List<Resource> ConsumptionPerSecond { get; }
+    public List<ResourceAmount> ConsumptionPerSecond { get; }
 
-    public List<Resource> ProductionPerSecond { get; }
+    public List<ResourceAmount> ProductionPerSecond { get; }
 }
