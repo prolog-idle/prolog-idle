@@ -112,7 +112,7 @@ public class Unit
         public void Map(UnitPatch source, Unit destination)
         {
             destination.Name = source.Name.Unwrap(destination.Name);
-            destination.RequiredTrait = source.Name.Unwrap(destination.RequiredTrait);
+            destination.RequiredTrait = source.RequiredTrait.Unwrap(destination.RequiredTrait);
             destination.Effects = source.Effects.Unwrap(UnitEffect.Mapper.Instance.MapList, destination.Effects);
         }
     }

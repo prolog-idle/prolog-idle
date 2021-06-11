@@ -6,40 +6,33 @@ using Razensoft.Mapper;
 
 public class GameDatabasePatch
 {
-    public List<ResourcePatch> Resources { get; } = new List<ResourcePatch>();
-    public List<UnitPatch> Units { get; } = new List<UnitPatch>();
-    public List<ProductionActionPatch> ProductionActions { get; } = new List<ProductionActionPatch>();
+    public List<ResourcePatch> Resources { get; private set; }
+    public List<UnitPatch> Units { get; private set; }
+    public List<ProductionActionPatch> ProductionActions { get; private set; }
 
     public static GameDatabasePatch FromJson(string json)
     {
         var result = new GameDatabasePatch();
         var dict = (Dictionary<string, object>) Json.Deserialize(json);
-        if (dict.ContainsKey("resources"))
+        result.Resources = ParseSection(dict, "resources", new ResourcePatch.Mapper());
+        result.Units = ParseSection(dict, "units", new UnitPatch.Mapper());
+        result.ProductionActions = ParseSection(dict, "production", new ProductionActionPatch.Mapper());
+        return result;
+    }
+
+    private static List<T> ParseSection<T>(
+        Dictionary<string, object> dict,
+        string section,
+        IMapper<Dictionary<string, object>, T> mapper)
+        where T : new()
+    {
+        if (!dict.TryGetValue(section, out var entry))
         {
-            foreach (var entry in (List<object>) dict["resources"])
-            {
-                var resourcePatch = ResourcePatch.Mapper.Instance.Map((Dictionary<string, object>) entry);
-                result.Resources.Add(resourcePatch);
-            }
-        }
-        if (dict.ContainsKey("units"))
-        {
-            foreach (var entry in (List<object>) dict["units"])
-            {
-                var unitPatch = UnitPatch.Mapper.Instance.Map((Dictionary<string, object>) entry);
-                result.Units.Add(unitPatch);
-            }
-        }
-        if (dict.ContainsKey("production"))
-        {
-            foreach (var entry in (List<object>) dict["production"])
-            {
-                var unitPatch = ProductionActionPatch.Mapper.Instance.Map((Dictionary<string, object>) entry);
-                result.ProductionActions.Add(unitPatch);
-            }
+            return new List<T>();
         }
 
-        return result;
+        var list = (List<object>) entry;
+        return mapper.MapList(list.Cast<Dictionary<string, object>>());
     }
 }
 
@@ -55,8 +48,6 @@ public class ResourcePatch
 
     public class Mapper : IMapper<Dictionary<string, object>, ResourcePatch>
     {
-        public static Mapper Instance { get; } = new Mapper();
-
         public void Map(Dictionary<string, object> source, ResourcePatch destination)
         {
             if (!source.ContainsKey("id"))
@@ -85,8 +76,6 @@ public class UnitPatch
 
     public class Mapper : IMapper<Dictionary<string, object>, UnitPatch>
     {
-        public static Mapper Instance { get; } = new Mapper();
-
         public void Map(Dictionary<string, object> source, UnitPatch destination)
         {
             if (!source.ContainsKey("id"))
@@ -145,8 +134,6 @@ public class ProductionActionPatch
 
     public class Mapper : IMapper<Dictionary<string, object>, ProductionActionPatch>
     {
-        public static Mapper Instance { get; } = new Mapper();
-
         public void Map(Dictionary<string, object> source, ProductionActionPatch destination)
         {
             if (!source.ContainsKey("id"))
