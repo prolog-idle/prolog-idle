@@ -1,85 +1,56 @@
 ﻿{
-  "Resources": [
+  "resources": [
     {
-      "Id": "adult",
-      "Name": "Adult",
-      "Traits": [
+      "id": "adult",
+      "name": "Adult",
+      "traits": [
         "worker"
       ]
     },
     {
-      "Id": "fruit",
-      "Name": "Fruit",
-      "Gatherable": 1.01
+      "id": "fruit",
+      "name": "Fruit",
+      "gatherable": 1.01
     },
     {
-      "Id": "stone",
-      "Name": "Stone",
-      "Gatherable": 0.01
+      "id": "stone",
+      "name": "Stone",
+      "gatherable": 0.01
     },
     {
-      "Id": "stick",
-      "Name": "Stick",
-      "Gatherable": 0.015
+      "id": "stick",
+      "name": "Stick",
+      "gatherable": 0.015
     },
     {
-      "Id": "knapped_stone",
-      "Name": "Knapped Stone"
+      "id": "knapped_stone",
+      "name": "Knapped Stone"
     },
     {
-      "Id": "spear",
-      "Name": "Spear"
+      "id": "spear",
+      "name": "Spear"
     }
   ],
-  "ProductionActions": [
+  "production": [
     {
-      "Id": "knap_stone",
-      "Name": "Knap stone",
-      "Consume": [
-        {
-          "Id": "stone",
-          "Amount": 1.0
-        }
-      ],
-      "Produce": [
-        {
-          "Id": "knapped_stone",
-          "Amount": 1.0
-        }
-      ]
+      "id": "knap_stone",
+      "name": "Knap stone",
+      "consume": { "stone": 1 },
+      "produce": { "knapped_stone": 1 }
     },
     {
-      "Id": "sharpen_stick",
-      "Name": "Sharpen Stick",
-      "Consume": [
-        {
-          "Id": "stick",
-          "Amount": 1.0
-        },
-        {
-          "Id": "knapped_stone",
-          "Amount": 0.5
-        },
-      ],
-      "Produce": [
-        {
-          "Id": "spear",
-          "Amount": 1.0
-        }
-      ]
+      "id": "sharpen_stick",
+      "name": "Sharpen Stick",
+      "consume": { "stick": 1, "knapped_stone": 0.5 },
+      "produce": { "spear": 1 }
     }
   ],
-  "Units": [
+  "units": [
     {
-      "Id": "gatherer",
-      "Name": "Gatherer",
-      "RequiredTrait": "worker",
-      "Effects": [
-        {
-          "Type": "gather",
-          "Value": 1.0
-        }
-      ]
+      "id": "gatherer",
+      "name": "Gatherer",
+      "required_trait": "worker",
+      "effects": { "gather": 1 }
     }
   ]
 }
